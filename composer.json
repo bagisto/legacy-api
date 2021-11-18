@@ -1,0 +1,16 @@
+{
+    "name": "bagisto/legacy-api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Prashant Singh",
+            "email": "prashant.singh852@webkul.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Webkul\\API\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

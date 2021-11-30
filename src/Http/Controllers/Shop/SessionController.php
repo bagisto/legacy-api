@@ -55,7 +55,7 @@ class SessionController extends Controller
         if (! $jwtToken = auth()->guard($this->guard)->attempt($request->only(['email', 'password']))) {
             return response()->json([
                 'error' => 'Invalid Email or Password',
-            ], 401);
+            ], 200);
         }
 
         Event::dispatch('customer.after.login', $request->get('email'));

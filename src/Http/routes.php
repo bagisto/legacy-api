@@ -16,6 +16,8 @@ use Webkul\API\Http\Controllers\Shop\ReviewController;
 use Webkul\API\Http\Controllers\Shop\SessionController;
 use Webkul\API\Http\Controllers\Shop\TransactionController;
 use Webkul\API\Http\Controllers\Shop\WishlistController;
+use Webkul\API\Http\Controllers\Shop\CompareController;
+use Webkul\API\Http\Controllers\Shop\HomeController;
 
 // Resources
 use Webkul\API\Http\Resources\Catalog\Attribute;
@@ -30,10 +32,13 @@ use Webkul\API\Http\Resources\Core\Slider;
 use Webkul\API\Http\Resources\Customer\Customer;
 use Webkul\API\Http\Resources\Customer\CustomerAddress;
 use Webkul\API\Http\Resources\Customer\Wishlist;
+use Webkul\API\Http\Resources\Customer\Compare;
 use Webkul\API\Http\Resources\Sales\Invoice;
 use Webkul\API\Http\Resources\Sales\Order;
 use Webkul\API\Http\Resources\Sales\OrderTransaction;
 use Webkul\API\Http\Resources\Sales\Shipment;
+use Webkul\API\Http\Resources\Shop\HomePage;
+use Webkul\API\Http\Resources\Shop\CmsPage;
 
 // Repositories
 use Webkul\Attribute\Repositories\AttributeRepository;
@@ -52,6 +57,7 @@ use Webkul\Sales\Repositories\InvoiceRepository;
 use Webkul\Sales\Repositories\OrderRepository;
 use Webkul\Sales\Repositories\OrderTransactionRepository;
 use Webkul\Sales\Repositories\ShipmentRepository;
+use Webkul\Velocity\Repositories\VelocityCustomerCompareProductRepository;
 
 Route::group(['prefix' => 'api'], function ($router) {
 
@@ -60,7 +66,16 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::get('switch-currency', [CoreController::class, 'switchCurrency']);
 
         Route::get('switch-locale', [CoreController::class, 'switchLocale']);
-
+        
+        //Home Page routes
+        Route::get('home-page', [HomeController::class, 'index'])->defaults('_config', [
+            'resource' => HomePage::class,
+        ]);
+        
+        //CMS routes
+        Route::get('cms-pages', [CmsController::class, 'index'])->defaults('_config', [
+            'resource' => CmsPage::class,
+        ]);
 
         //Category routes
         Route::get('categories', [ResourceController::class, 'index'])->defaults('_config', [
@@ -315,6 +330,24 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::get('move-to-cart/{id}', [WishlistController::class, 'moveToCart']);
 
         Route::get('wishlist/add/{id}', [WishlistController::class, 'create']);
+
+        //Compare routes
+        Route::get('compare', [ResourceController::class, 'index'])->defaults('_config', [
+            'repository' => VelocityCustomerCompareProductRepository::class,
+            'resource' => Compare::class,
+            'authorization_required' => true
+        ]);
+
+        Route::post('compare/add/{id}', [CompareController::class, 'create'])->defaults('_config', [
+            'repository' => VelocityCustomerCompareProductRepository::class,
+            'authorization_required' => true
+        ]);
+
+        Route::delete('compare/{id}', [ResourceController::class, 'destroy'])->defaults('_config', [
+            'repository' => VelocityCustomerCompareProductRepository::class,
+            'resource' => Compare::class,
+            'authorization_required' => true
+        ]);
 
         //Checkout routes
         Route::group(['prefix' => 'checkout'], function ($router) {

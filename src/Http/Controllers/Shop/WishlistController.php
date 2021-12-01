@@ -39,6 +39,8 @@ class WishlistController extends Controller
         auth()->setDefaultDriver($this->guard);
 
         $this->middleware('auth:' . $this->guard);
+        
+        $this->middleware('validateAPIHeader');
 
         $this->wishlistRepository = $wishlistRepository;
 

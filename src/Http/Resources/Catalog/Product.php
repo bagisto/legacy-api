@@ -17,7 +17,9 @@ class Product extends JsonResource
         $this->productReviewHelper = app('Webkul\Product\Helpers\Review');
 
         $this->wishlistHelper = app('Webkul\Customer\Helpers\Wishlist');
-
+        
+        $this->productViewHelper = app('Webkul\Product\Helpers\View');
+        
         parent::__construct($resource);
     }
 
@@ -80,6 +82,11 @@ class Product extends JsonResource
             /* super attributes */
             $this->mergeWhen($productTypeInstance->isComposite(), [
                 'super_attributes' => Attribute::collection($product->super_attributes),
+            ]),
+            
+            /* custom attributes */
+            $this->mergeWhen($this->productViewHelper->getAdditionalData($product), [
+                'more_information' => $this->productViewHelper->getAdditionalData($product),
             ]),
         ];
     }
@@ -186,7 +193,9 @@ class Product extends JsonResource
                 return array_merge($data, [
                     'qty'                   => $groupedProduct->qty,
                     'isSaleable'            => $associatedProduct->getTypeInstance()->isSaleable(),
-                    'formated_price'        => $associatedProduct->getTypeInstance()->getPriceHtml(),
+                    'formated_price'        => core()->currency($associatedProduct->getTypeInstance()->evaluatePrice($data['price'])),
+                    'formated_price_html'   => $associatedProduct->getTypeInstance()->getPriceHtml(),
+                    'formated_special_price' => $associatedProduct->getTypeInstance()->haveSpecialPrice() ? core()->currency($associatedProduct->getTypeInstance()->evaluatePrice($associatedProduct->getTypeInstance()->getSpecialPrice())) : 0,
                     'show_quantity_changer' => $associatedProduct->getTypeInstance()->showQuantityBox(),
                 ]);
             })
@@ -215,6 +224,19 @@ class Product extends JsonResource
      */
     private function getConfigurableProductInfo($product)
     {
+        $super_attribute_codes = $product->super_attributes->pluck('code');
+
+        foreach ($product->variants as $key => $variant) {
+            $super_attribute_map = [];
+            foreach ($super_attribute_codes as $attribute_code) {
+                if ( isset($variant[$attribute_code]) ) {
+                    $super_attribute_map[$attribute_code] = $variant[$attribute_code];
+                }
+            }
+
+            $product->variants[$key]['map'] = $super_attribute_map;
+        }
+        
         return [
             'variants' => $product->variants
         ];

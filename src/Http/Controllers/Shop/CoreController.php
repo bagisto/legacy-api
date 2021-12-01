@@ -31,8 +31,22 @@ class CoreController extends Controller
      */
     public function getCountryStateGroup()
     {
+        $countyStates = [];
+        foreach (core()->groupedStatesByCountries() as $country_code => $states) {
+            $country = app('Webkul\Core\Repositories\CountryRepository')->findOneByField('code', $country_code);
+            
+            $countyStates[] = [
+                'country_id'        => $country['id'],
+                'name'              => $country['name'],
+                'country_code'      => $country['code'],
+                'isStateRequired'   => true,
+                'isZipOptional'     => false,
+                'states'            => $states,
+            ];
+        }
+
         return response()->json([
-            'data' => core()->groupedStatesByCountries(),
+            'data' => $countyStates,
         ]);
     }
 

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Webkul\Customer\Http\Requests\CustomerRegistrationRequest;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
 use Webkul\Customer\Repositories\CustomerRepository;
+use Webkul\API\Http\Resources\Customer\Customer as CustomerResource;
 
 class CustomerController extends Controller
 {
@@ -59,6 +60,8 @@ class CustomerController extends Controller
 
             $this->middleware('auth:' . $this->guard);
         }
+        
+        $this->middleware('validateAPIHeader');
 
         $this->customerRepository = $customerRepository;
 
@@ -90,10 +93,29 @@ class CustomerController extends Controller
         $customer = $this->customerRepository->create($data);
 
         Event::dispatch('customer.registration.after', $customer);
+        
+        if ( core()->getConfigData('general.api.customer.login_after_register') ) {
+            $jwtToken = null;
 
-        return response()->json([
-            'message' => 'Your account has been created successfully.',
-        ]);
+            if (! $jwtToken = auth()->guard($this->guard)->attempt($request->only(['email', 'password']))) {
+                return response()->json([
+                    'error' => 'Invalid Email or Password',
+                ], 200);
+            }
+
+            Event::dispatch('customer.after.login', $request->get('email'));
+
+            return response()->json([
+                'token'   => $jwtToken,
+                'message' => 'Logged in successfully.',
+                'data'    => new CustomerResource($customer),
+            ]);
+        } else {
+            
+            return response()->json([
+                'message' => 'Your account has been created successfully.',
+            ]);
+        }
     }
 
     /**

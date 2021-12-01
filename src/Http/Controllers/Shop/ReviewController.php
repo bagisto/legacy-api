@@ -32,6 +32,8 @@ class ReviewController extends Controller
         $this->guard = request()->has('token') ? 'api' : 'customer';
 
         auth()->setDefaultDriver($this->guard);
+        
+        $this->middleware('validateAPIHeader');
 
         $this->reviewRepository = $reviewRepository;
     }

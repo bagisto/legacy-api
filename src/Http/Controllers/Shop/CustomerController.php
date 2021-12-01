@@ -60,6 +60,8 @@ class CustomerController extends Controller
 
             $this->middleware('auth:' . $this->guard);
         }
+        
+        $this->middleware('validateAPIHeader');
 
         $this->customerRepository = $customerRepository;
 

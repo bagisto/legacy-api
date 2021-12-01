@@ -24,6 +24,8 @@ class ProductController extends Controller
      */
     public function __construct(ProductRepository $productRepository)
     {
+        $this->middleware('validateAPIHeader');
+
         $this->productRepository = $productRepository;
     }
 

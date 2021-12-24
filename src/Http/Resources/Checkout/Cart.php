@@ -18,6 +18,8 @@ class Cart extends JsonResource
      */
     public function toArray($request): array
     {
+        $currencyCode = session()->get('currency') ?: core()->getChannelBaseCurrencyCode();
+
         $taxes = Tax::getTaxRatesWithAmount($this, false);
         $baseTaxes = Tax::getTaxRatesWithAmount($this, true);
 
@@ -39,20 +41,20 @@ class Cart extends JsonResource
             'base_currency_code'                 => $this->base_currency_code,
             'channel_currency_code'              => $this->channel_currency_code,
             'cart_currency_code'                 => $this->cart_currency_code,
-            'grand_total'                        => $this->grand_total,
-            'formated_grand_total'               => core()->formatPrice($this->grand_total, $this->cart_currency_code),
+            'grand_total'                        => core()->convertPrice($this->base_grand_total, $currencyCode),
+            'formated_grand_total'               => core()->formatPrice(core()->convertPrice($this->base_grand_total, $currencyCode), $currencyCode),
             'base_grand_total'                   => $this->base_grand_total,
             'formated_base_grand_total'          => core()->formatBasePrice($this->base_grand_total),
-            'sub_total'                          => $this->sub_total,
-            'formated_sub_total'                 => core()->formatPrice($this->sub_total, $this->cart_currency_code),
+            'sub_total'                          => core()->convertPrice($this->base_sub_total, $currencyCode),
+            'formated_sub_total'                 => core()->formatPrice(core()->convertPrice($this->base_sub_total, $currencyCode), $currencyCode),
             'base_sub_total'                     => $this->base_sub_total,
             'formated_base_sub_total'            => core()->formatBasePrice($this->base_sub_total),
-            'tax_total'                          => $this->tax_total,
-            'formated_tax_total'                 => core()->formatPrice($this->tax_total, $this->cart_currency_code),
+            'tax_total'                          => core()->convertPrice($this->base_tax_total, $currencyCode),
+            'formated_tax_total'                 => core()->formatPrice(core()->convertPrice($this->base_tax_total, $currencyCode), $currencyCode),
             'base_tax_total'                     => $this->base_tax_total,
             'formated_base_tax_total'            => core()->formatBasePrice($this->base_tax_total),
-            'discount'                           => $this->discount_amount,
-            'formated_discount'                  => core()->formatPrice($this->discount_amount, $this->cart_currency_code),
+            'discount'                           => core()->convertPrice($this->base_discount_amount, $currencyCode),
+            'formated_discount'                  => core()->formatPrice(core()->convertPrice($this->base_discount_amount, $currencyCode), $currencyCode),
             'base_discount'                      => $this->base_discount_amount,
             'formated_base_discount'             => core()->formatBasePrice($this->base_discount_amount),
             'checkout_method'                    => $this->checkout_method,

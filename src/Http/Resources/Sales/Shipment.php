@@ -28,6 +28,8 @@ class Shipment extends JsonResource
             'customer'         => $this->when($this->customer_id, new CustomerResource($this->customer)),
             'inventory_source' => $this->when($this->inventory_source_id, new InventorySourceResource($this->inventory_source)),
             'items'            => ShipmentItem::collection($this->items),
+            'updated_at'       => $this->updated_at->format('Y-m-d'),
+            'created_at'       => $this->created_at->format('Y-m-d'),
         ];
     }
 }

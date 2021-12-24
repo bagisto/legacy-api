@@ -74,6 +74,7 @@ class CmsPage extends JsonResource
     public function getAll()
     {
         $params = request()->all();
+        $params['locale'] = core()->getRequestedLocaleCode();
 
         $results = $this->cmsRepository->scopeQuery(function ($query) use ($params) {
             $channel = $params['channel_id'];

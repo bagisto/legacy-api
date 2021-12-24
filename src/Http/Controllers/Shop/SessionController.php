@@ -95,12 +95,13 @@ class SessionController extends Controller
         $customer = auth($this->guard)->user();
 
         $this->validate(request(), [
-            'first_name'    => 'required',
-            'last_name'     => 'required',
-            'gender'        => 'required',
-            'date_of_birth' => 'nullable|date|before:today',
-            'email'         => 'email|unique:customers,email,' . $customer->id,
-            'password'      => 'confirmed|min:6',
+            'first_name'            => 'required',
+            'last_name'             => 'required',
+            'gender'                => 'required',
+            'date_of_birth'         => 'nullable|date|before:today',
+            'email'                 => 'email|unique:customers,email,' . $customer->id,
+            'password'              => 'confirmed|min:6',
+            'password_confirmation' => 'required_with:password',
         ]);
 
         $data = request()->only('first_name', 'last_name', 'gender', 'date_of_birth', 'email', 'password');

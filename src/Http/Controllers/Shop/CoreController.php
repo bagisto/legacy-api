@@ -44,7 +44,7 @@ class CoreController extends Controller
                 'states'            => $states,
             ];
         }
-
+        
         return response()->json([
             'data' => $countyStates,
         ]);

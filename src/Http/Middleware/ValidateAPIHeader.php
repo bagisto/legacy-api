@@ -2,6 +2,7 @@
 
 namespace Webkul\API\Http\Middleware;
 
+
 use Closure;
 use Webkul\Core\Repositories\ChannelRepository;
 use Webkul\Core\Repositories\CurrencyRepository;
@@ -61,9 +62,7 @@ class ValidateAPIHeader
     public function handle($request, Closure $next)
     {
         $token = request()->input('token');
-        $channelId = request()->input('channel_id') ?? core()->getDefaultChannel()->id;
-        $currencyCode = request()->input('currency') ?? session()->get('currency');
-        $localeCode = request()->input('locale') ?? session()->get('locale');
+        $channelId = request()->input('channel_id');
 
         if (! $this->validateConfigHeader())
         {
@@ -76,43 +75,18 @@ class ValidateAPIHeader
         $request['token'] = $token ?: 0;
         
         // Validate the header request storeId
-        $channel = $this->channelRepository->find($channelId);
-        if (! $channel ) {
-            return response()->json([
-                'success'   => false,
-                'message'   => trans('admin::app.api.auth.invalid-store'),
-            ], 200);
-        }
-        $request['channel_id'] = $channelId;
-        
-        // Check for the Channel's currency and validate request currency
-        $channelCurrencyCodes = $channel->currencies->pluck('code')->toArray();
-        if (! $currencyCode || !in_array($currencyCode, $channelCurrencyCodes)) {
-
-            if ($currency = $this->currencyRepository->find($channel->base_currency_id)) {
-                session()->put('currency', $currency->code);
-
-                $request['currency'] = $currency->code;
+        if ( $channelId ) {
+            $channel = $this->channelRepository->find($channelId);
+            if (! $channel ) {
+                return response()->json([
+                    'success'   => false,
+                    'message'   => trans('admin::app.api.auth.invalid-store'),
+                ], 200);
             }
-        } else {
-            session()->put('currency', $currencyCode);
-            $request['currency'] = $currencyCode;
+            
+            $request['channel_id'] = $channelId;
         }
-
-        // Check for the Channel's locale and validate request locale
-        $channelLocaleCodes = $channel->locales->pluck('code')->toArray();
-        if (! $localeCode || !in_array($localeCode, $channelLocaleCodes)) {
-
-            if ($locale = $this->localeRepository->find($channel->default_locale_id)) {
-                session()->put('locale', $locale->code);
-
-                $request['locale'] = $locale->code;
-            }
-        } else {
-            session()->put('locale', $localeCode);
-            $request['locale'] = $localeCode;
-        }
-        
+            
         return $next($request);
     }
 

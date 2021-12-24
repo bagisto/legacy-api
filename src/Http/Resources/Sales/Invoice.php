@@ -45,7 +45,7 @@ class Invoice extends JsonResource
             'order_address'                 => new OrderAddress($this->address),
             'transaction_id'                => $this->transaction_id,
             'items'                         => InvoiceItem::collection($this->items),
-            'created_at'                    => $this->created_at
+            'created_at'                    => $this->created_at->format('Y-m-d'),
         ];
     }
 }

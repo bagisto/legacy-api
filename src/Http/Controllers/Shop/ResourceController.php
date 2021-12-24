@@ -3,6 +3,7 @@
 namespace Webkul\API\Http\Controllers\Shop;
 
 use Illuminate\Http\Request;
+use Webkul\Checkout\Facades\Cart;
 
 class ResourceController extends Controller
 {
@@ -83,7 +84,10 @@ class ResourceController extends Controller
             $results = $query->get();
         }
 
-        return $this->_config['resource']::collection($results);
+        return response()->json([
+            'data'      => $this->_config['resource']::collection($results),
+            'cartCount' => Cart::getCart() ? count(Cart::getCart()->items) : 0,
+        ]);
     }
 
     /**

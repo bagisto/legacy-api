@@ -33,7 +33,7 @@ class HomeController extends Controller
         auth()->setDefaultDriver($this->guard);
 
         $this->middleware('auth:' . $this->guard)->except(['index']);
-
+        
         $this->middleware('validateAPIHeader');
 
         $this->_config = request('_config');

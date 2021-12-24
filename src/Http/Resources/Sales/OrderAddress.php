@@ -26,8 +26,8 @@ class OrderAddress extends JsonResource
             'city'         => $this->city,
             'postcode'     => $this->postcode,
             'phone'        => $this->phone,
-            'created_at'   => $this->created_at,
-            'updated_at'   => $this->updated_at,
+            'updated_at'   => $this->updated_at->format('Y-m-d'),
+            'created_at'   => $this->created_at->format('Y-m-d'),
         ];
     }
 }

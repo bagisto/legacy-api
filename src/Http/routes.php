@@ -18,6 +18,7 @@ use Webkul\API\Http\Controllers\Shop\TransactionController;
 use Webkul\API\Http\Controllers\Shop\WishlistController;
 use Webkul\API\Http\Controllers\Shop\CompareController;
 use Webkul\API\Http\Controllers\Shop\HomeController;
+use Webkul\API\Http\Controllers\Shop\CmsController;
 
 // Resources
 use Webkul\API\Http\Resources\Catalog\Attribute;

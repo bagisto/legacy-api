@@ -48,7 +48,7 @@ class CompareController extends Controller
 
             $this->middleware('auth:' . $this->guard);
         }
-
+        
         $this->middleware('validateAPIHeader');
 
         $this->compareRepository = $compareRepository;
@@ -68,7 +68,7 @@ class CompareController extends Controller
     {
         $channel = $this->channelRepository->find(request()->input('channel_id'));
 
-        $locale = request()->input('locale');
+        $locale = core()->getRequestedLocaleCode();
 
         $customer = auth()->guard($this->guard)->user();
         if (! $customer) {

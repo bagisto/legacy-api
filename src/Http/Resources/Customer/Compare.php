@@ -1,4 +1,5 @@
 <?php
+
 namespace Webkul\API\Http\Resources\Customer;
 
 use Illuminate\Http\Resources\Json\JsonResource;

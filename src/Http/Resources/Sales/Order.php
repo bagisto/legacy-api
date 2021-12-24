@@ -104,8 +104,8 @@ class Order extends JsonResource
             'items'                              => OrderItem::collection($this->items),
             'invoices'                           => Invoice::collection($this->invoices),
             'shipments'                          => Shipment::collection($this->shipments),
-            'updated_at'                         => $this->updated_at,
-            'created_at'                         => $this->created_at,
+            'updated_at'                         => $this->updated_at->format('Y-m-d'),
+            'created_at'                         => $this->created_at->format('Y-m-d'),
         ];
     }
 }

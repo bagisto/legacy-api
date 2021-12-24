@@ -73,6 +73,12 @@ class Product extends JsonResource
                 $product->getTypeInstance()->showQuantityBox()
             ),
 
+            'product_flats' => $product->product_flats->toArray(),
+            /* custom attributes */
+            $this->mergeWhen($this->productViewHelper->getAdditionalData($product), [
+                'more_information' => $this->productViewHelper->getAdditionalData($product),
+            ]),
+
             /* product's extra information */
             $this->merge($this->allProductExtraInfo()),
 
@@ -82,11 +88,6 @@ class Product extends JsonResource
             /* super attributes */
             $this->mergeWhen($productTypeInstance->isComposite(), [
                 'super_attributes' => Attribute::collection($product->super_attributes),
-            ]),
-            
-            /* custom attributes */
-            $this->mergeWhen($this->productViewHelper->getAdditionalData($product), [
-                'more_information' => $this->productViewHelper->getAdditionalData($product),
             ]),
         ];
     }

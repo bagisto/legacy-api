@@ -49,9 +49,7 @@ class CompareController extends Controller
             $this->middleware('auth:' . $this->guard);
         }
         
-        // OpenSource API Start
         $this->middleware('validateAPIHeader');
-        // OpenSource API End
 
         $this->compareRepository = $compareRepository;
 

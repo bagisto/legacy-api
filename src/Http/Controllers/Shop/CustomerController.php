@@ -100,7 +100,7 @@ class CustomerController extends Controller
             if (! $jwtToken = auth()->guard($this->guard)->attempt($request->only(['email', 'password']))) {
                 return response()->json([
                     'error' => 'Invalid Email or Password',
-                ], 401);
+                ], 200);
             }
 
             Event::dispatch('customer.after.login', $request->get('email'));
@@ -111,6 +111,7 @@ class CustomerController extends Controller
                 'data'    => new CustomerResource($customer),
             ]);
         } else {
+            
             return response()->json([
                 'message' => 'Your account has been created successfully.',
             ]);

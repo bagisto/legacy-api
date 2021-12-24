@@ -2,7 +2,6 @@
 
 namespace Webkul\API\Http\Middleware;
 
-
 use Closure;
 use Webkul\Core\Repositories\ChannelRepository;
 use Webkul\Core\Repositories\CurrencyRepository;

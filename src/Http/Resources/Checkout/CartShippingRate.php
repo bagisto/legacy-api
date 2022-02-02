@@ -24,10 +24,10 @@ class CartShippingRate extends JsonResource
             'method'              => $this->method,
             'method_title'        => $this->method_title,
             'method_description'  => $this->method_description,
-            'price'               => $this->price,
-            'formated_price'      => core()->formatPrice($this->price, $cart->cart_currency_code),
-            'base_price'          => $this->base_price,
-            'formated_base_price' => core()->formatBasePrice($this->base_price),
+            'price'               => (float) $this->price,
+            'formated_price'      => (string) core()->formatPrice($this->price, $cart->cart_currency_code),
+            'base_price'          => (float) $this->base_price,
+            'formated_base_price' => (string) core()->formatBasePrice($this->base_price),
             'created_at'          => $this->created_at,
             'updated_at'          => $this->updated_at
         ];

@@ -330,7 +330,7 @@ Route::group(['prefix' => 'api'], function ($router) {
 
         Route::get('move-to-cart/{id}', [WishlistController::class, 'moveToCart']);
 
-        Route::get('wishlist/add/{id}', [WishlistController::class, 'create']);
+        Route::post('wishlist/add/{id}', [WishlistController::class, 'create']);
 
         //Compare routes
         Route::get('compare', [ResourceController::class, 'index'])->defaults('_config', [

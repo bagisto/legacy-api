@@ -104,7 +104,7 @@ class SessionController extends Controller
             'password_confirmation' => 'required_with:password',
         ]);
 
-        $data = request()->only('first_name', 'last_name', 'gender', 'date_of_birth', 'email', 'password');
+        $data = request()->only('first_name', 'last_name', 'gender', 'date_of_birth', 'phone', 'email', 'password');
 
         if (! isset($data['password']) || ! $data['password']) {
             unset($data['password']);

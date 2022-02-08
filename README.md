@@ -11,6 +11,10 @@ This package is for the user who still wants to use the older version.
 
 - Run `composer require bagisto/legacy-api`.
 
+- Run `php artisan jwt:secret`.
+
+- Add JWT Time To Live in `.env` file: `JWT_TTL=525600`
+
 ## Contributors ✨
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->

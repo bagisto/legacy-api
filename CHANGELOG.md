@@ -2,6 +2,8 @@
 
 This changelog consists of the bug & security fixes and new features included in the releases listed below.
 
+* [fixed] - Showing wrong date,month,year and time on review page.
+
 * [fixed] - Guest user is not able to place order.
 
 * [fixed] - User will be able to set new password by entering wrong current password on profile page.

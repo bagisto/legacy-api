@@ -2,6 +2,8 @@
 
 This changelog consists of the bug & security fixes and new features included in the releases listed below.
 
+* [fixed] - Wishlist icon is not dark after user visit second time on same catalog page.
+
 * [fixed] - Showing wrong date,month,year and time on review page.
 
 * [fixed] - Guest user is not able to place order.

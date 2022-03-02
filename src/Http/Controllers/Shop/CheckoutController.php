@@ -77,15 +77,6 @@ class CheckoutController extends Controller
     */
     public function saveAddress(CustomerAddressForm $request)
     {
-        try {
-            $this->validateOrder();
-        } catch (\Exception $e) {
-            return response()->json([
-                'success'   => false,
-                'message'   => $e->getMessage()
-            ]);
-        }
-
         $data = request()->all();
 
         $data['billing']['address1'] = implode(PHP_EOL, array_filter($data['billing']['address1']));

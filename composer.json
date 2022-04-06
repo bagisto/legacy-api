@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php-open-source-saver/jwt-auth": "^1.2"
+        "php-open-source-saver/jwt-auth": "^1.4"
     },
     "autoload": {
         "psr-4": {

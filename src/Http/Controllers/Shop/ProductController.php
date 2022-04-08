@@ -25,6 +25,10 @@ class ProductController extends Controller
      */
     public function __construct(ProductRepository $productRepository)
     {
+        $this->guard = request()->has('token') ? 'api' : 'customer';
+
+        auth()->setDefaultDriver($this->guard);
+        
         $this->middleware('validateAPIHeader');
 
         $this->productRepository = $productRepository;

@@ -196,7 +196,14 @@ class CheckoutController extends Controller
 
         Cart::collectTotals();
 
-        $this->validateOrder();
+        try {
+            $this->validateOrder();
+        } catch (\Exception $e) {
+            return response()->json([
+                'success'   => false,
+                'message'   => $e->getMessage()
+            ]);
+        }
 
         $cart = Cart::getCart();
 

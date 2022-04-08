@@ -195,7 +195,7 @@ class CheckoutController extends Controller
         }
 
         Cart::collectTotals();
-        
+
         try {
             $this->validateOrder();
         } catch (\Exception $e) {

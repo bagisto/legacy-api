@@ -119,7 +119,7 @@ class SessionController extends Controller
                 unset($data['password']);
             }
         }
-        
+
         $updatedCustomer = $this->customerRepository->update($data, $customer->id);
 
         return response()->json([

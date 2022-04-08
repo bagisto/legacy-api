@@ -2,7 +2,6 @@
 
 namespace Webkul\API\Http\Controllers\Shop;
 
-use Hash;
 use Illuminate\Support\Facades\Event;
 use Webkul\API\Http\Resources\Customer\Customer as CustomerResource;
 use Webkul\Customer\Http\Requests\CustomerLoginRequest;
@@ -101,25 +100,18 @@ class SessionController extends Controller
             'gender'                => 'required',
             'date_of_birth'         => 'nullable|date|before:today',
             'email'                 => 'email|unique:customers,email,' . $customer->id,
-            'password'              => 'confirmed|min:6|required_with:oldpassword',
-            'oldpassword'           => 'required_with:password',
+            'password'              => 'confirmed|min:6',
             'password_confirmation' => 'required_with:password',
         ]);
 
-        $data = request()->only('first_name', 'last_name', 'gender', 'date_of_birth', 'phone', 'email', 'oldpassword', 'password');
+        $data = request()->only('first_name', 'last_name', 'gender', 'date_of_birth', 'phone', 'email', 'password');
 
-        if ( isset($data['oldpassword']) ) {
-            if ($data['oldpassword'] != '' || $data['oldpassword'] != null) {
-                if ( Hash::check($data['oldpassword'], $customer->password) ) {
-                    $data['password'] = bcrypt($data['password']);
-                } else {
-                    unset($data['password']);
-                }
-            } else {
-                unset($data['password']);
-            }
+        if (! isset($data['password']) || ! $data['password']) {
+            unset($data['password']);
+        } else {
+            $data['password'] = bcrypt($data['password']);
         }
-        
+
         $updatedCustomer = $this->customerRepository->update($data, $customer->id);
 
         return response()->json([

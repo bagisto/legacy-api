@@ -26,7 +26,7 @@ class ForgotPasswordController extends Controller
                 'message' => trans($response),
             ])
             : response()->json([
-                'error' => trans($response),
+                'error' => trans("admin::app.users.forget-password.{$response}"),
             ]);
     }
 

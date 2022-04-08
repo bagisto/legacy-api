@@ -24,8 +24,8 @@ class ProductReview extends JsonResource
             'status'     => $this->status,
             'product'    => new Product($this->product),
             'customer'   => $this->when($this->customer_id, new CustomerResource($this->customer)),
-            'created_at' => $this->created_at->format('Y-m-d H:m:s'),
-            'updated_at' => $this->updated_at->format('Y-m-d H:m:s'),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

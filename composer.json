@@ -13,6 +13,9 @@
             "email": "viveksh047@webkul.com"
         }
     ],
+    "require": {
+        "php-open-source-saver/jwt-auth": "^1.4"
+    },
     "autoload": {
         "psr-4": {
             "Webkul\\API\\": "src/"

@@ -26,7 +26,7 @@ class ForgotPasswordController extends Controller
                 'message' => trans($response),
             ])
             : response()->json([
-                'error' => trans("admin::app.users.forget-password.{$response}"),
+                'error' => 'Warning: You have requested password reset recently, please check your email.',
             ]);
     }
 

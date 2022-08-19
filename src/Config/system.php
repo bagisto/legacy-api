@@ -38,5 +38,31 @@ return [
                 'channel_based' => true,
             ],
         ]
+    ],  [
+        'key'   => 'general.api.pushnotification',
+        'name'  => 'api::app.system.push-notification-configuration',
+        'sort'  => 3,
+        'fields'=> [
+            [
+                'name'          => 'server_key',
+                'title'         => 'api::app.system.server-key',
+                'type'          => 'text',
+                'validation'    => '',
+                'info'          => 'api::app.system.info-get-server-key',
+                'channel_based' => true
+            ], [
+                'name'          => 'android_topic',
+                'title'         => 'api::app.system.android-topic',
+                'type'          => 'text',
+                'validation'    => '',
+                'channel_based' => true
+            ], [
+                'name'          => 'ios_topic',
+                'title'         => 'api::app.system.ios-topic',
+                'type'          => 'text',
+                'validation'    => '',
+                'channel_based' => true
+            ],
+        ]
     ]
 ];

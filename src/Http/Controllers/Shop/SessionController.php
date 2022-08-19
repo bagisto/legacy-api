@@ -2,7 +2,7 @@
 
 namespace Webkul\API\Http\Controllers\Shop;
 
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Event;
 use Webkul\API\Http\Resources\Customer\Customer as CustomerResource;
 use Webkul\Customer\Http\Requests\CustomerLoginRequest;
@@ -113,7 +113,10 @@ class SessionController extends Controller
                 if ( Hash::check($data['oldpassword'], $customer->password) ) {
                     $data['password'] = bcrypt($data['password']);
                 } else {
-                    unset($data['password']);
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Warning: You provided wrong current password.',
+                    ]);
                 }
             } else {
                 unset($data['password']);

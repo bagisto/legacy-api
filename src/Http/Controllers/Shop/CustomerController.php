@@ -8,6 +8,7 @@ use Webkul\Customer\Http\Requests\CustomerRegistrationRequest;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\API\Http\Resources\Customer\Customer as CustomerResource;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -135,5 +136,43 @@ class CustomerController extends Controller
         return response()->json([
             'message' => 'Invalid Request.',
         ], 403);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy()
+    {
+        $customer = auth($this->guard)->user();
+
+        $this->validate(request(), [
+            'password'  => 'required',
+        ]);
+
+        $data = request()->all();
+
+        if (!$customer) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Warning: You need to login first to remove account.',
+            ]);
+        }
+
+        if ( Hash::check($data['password'], $customer->password)) {
+            
+            if ($this->customerRepository->delete($customer->id)) {
+                return response()->json([
+                    'success'   => true,
+                    'message'   => 'Success: Your account has been deleted successfully.'
+                ]);
+            }
+        } else {
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Warning: You provided wrong current password.'
+            ]);
+        }
     }
 }

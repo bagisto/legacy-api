@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 // Controllers
 use Webkul\API\Http\Controllers\Shop\AddressController;
 use Webkul\API\Http\Controllers\Shop\CartController;
@@ -220,6 +222,8 @@ Route::group(['prefix' => 'api'], function ($router) {
         Route::get('customer/get', [SessionController::class, 'get']);
 
         Route::put('customer/profile', [SessionController::class, 'update']);
+
+        Route::post('customer/delete', [CustomerController::class, 'destroy']);
 
         Route::post('customer/register', [CustomerController::class, 'create']);
 

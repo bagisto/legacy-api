@@ -129,12 +129,6 @@ class NotificationController extends Controller
         
         $data = collect(request()->all())->except('_token')->toArray();
 
-        // if ( $data['type'] == 'custom_collection' && isset($data['custom_collection']) ) {
-        //     $data['product_category_id'] = $data['custom_collection'];
-
-        //     unset($data['custom_collection']);
-        // }
-
         $this->notificationRepository->create($data);
 
         session()->flash('success', trans('api::app.alert.create-success', ['name' => 'Notification']));

@@ -23,7 +23,8 @@
             <div class="page-header">
                 <div class="page-title">
                     <h1>
-                        <i class="icon angle-left-icon back-link" onclick="history.length > 1 ? history.go(-1) : window.location = '{{ url('/admin/notification') }}';"></i>
+                        <i class="icon angle-left-icon back-link" onclick="window.location = '{{ route('api.notification.index') }}'"></i>
+
                         {{ __('api::app.notification.edit-notification') }}
                     </h1>
 
@@ -54,7 +55,7 @@
                     </div>
                 </div>
                 <div class="page-action" style="margin-top:10px;">
-                     <a href="{{ route('api.notification.send-notification',$notification['id']) }}"  class="btn btn-lg btn-primary">
+                     <a href="{{ route('api.notification.send-notification', $notification['id']) }}"  class="btn btn-lg btn-primary">
                         {{ __('api::app.notification.title') }}
                     </a> 
 

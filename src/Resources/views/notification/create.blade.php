@@ -27,6 +27,7 @@
 
                 <div class="form-container">
                     @csrf()
+                    
                     <accordian title="{{ __('api::app.notification.general') }}" :active="true">
                         <div slot="body">
 
@@ -117,7 +118,7 @@
                     {{ __('api::app.notification.product-cat-id') }}
                 </label>
 
-                <input type="text" valid="" id="product_category_id" class="control" name="product_category_id" v-validate="showProductCategory ? 'required' : ''"  value="{{ old('product_category_id') }}" data-vv-as="&quot;{{ __('api::app.notification.product-cat-id') }}&quot;" @keyup="checkIdExistOrNot" v-model="productCategoryInputBox" placeholder="{{ __('api::app.notification.product-cat-id') }}" />
+                <input type="text" valid="" id="product_category_id" class="control" name="product_category_id" v-validate="showProductCategory ? 'required' : ''"  data-vv-as="&quot;{{ __('api::app.notification.product-cat-id') }}&quot;" @keyup="checkIdExistOrNot" v-model="productCategoryInputBox" placeholder="{{ __('api::app.notification.product-cat-id') }}" />
 
                 <span class="control-error" v-if="errors.has('product_category_id')">@{{ errors.first('product_category_id') }}</span>
 
@@ -140,13 +141,9 @@
                     showProductCategory: false,
                     valid: '',
                     notificationType : '',
-                    productCategoryInputBox : '',
+                    productCategoryInputBox : '{{ old('product_category_id') }}',
                     message: '',
                     isValid: false,
-                    collections: [],
-                    search_term: '',
-                    is_searching: false,
-                    brand:  {},
                 }
             },
 

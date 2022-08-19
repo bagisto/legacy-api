@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Mobikul\Repositories;
+namespace Webkul\API\Repositories;
 
 use Webkul\Core\Eloquent\Repository;
 
@@ -13,6 +13,6 @@ class NotificationTranslationRepository extends Repository
      */
     public function model()
     {
-        return \Webkul\Mobikul\Contracts\PushNotificationTranslation::class;
+        return \Webkul\API\Contracts\PushNotificationTranslation::class;
     }
 }

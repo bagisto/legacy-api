@@ -44,9 +44,9 @@ class SendNotification
 
         // for android device
         $url        = "https://fcm.googleapis.com/fcm/send";
-        $authKey    = core()->getConfigData('mobikul.mobikul.pushnotification.apikey');
-        $androidTopic = core()->getConfigData('mobikul.mobikul.pushnotification.android_topic');
-        $iosTopic   = core()->getConfigData('mobikul.mobikul.pushnotification.ios_topic');
+        $authKey    = core()->getConfigData('general.api.pushnotification.server_key');
+        $androidTopic = core()->getConfigData('general.api.pushnotification.android_topic');
+        $iosTopic   = core()->getConfigData('general.api.pushnotification.ios_topic');
 
         switch ($type = $data->type) {
             case 'product' :
@@ -55,33 +55,16 @@ class SendNotification
                 $targeturl = route('shop.productOrCategory.index', $product->url_key);
                 
                 $fieldData = [
-                        'body' => $data->content,
-                        'title' => $data->title,
-                        'click_action' => $targeturl,
-                        'message' => $data->content,
-                        'notificationType' => $type,
-                        'productName'=> $product->name ?? '',
-                        'productId'=> $product->id ?? '',
-                        'banner_url'=> asset('storage/'.$data->image),
-                        'id'=> $data->id,
-                        'body'=> $data->content,
-                        'sound'=> 'default',
-                        'title'=> $data->title,
-                        'message'=> $data->content,
-
-                ];
-            break;
-
-            case 'custom_collection':
-                $targeturl = route('shop.home.index');
-                $fieldData = [
-                    'banner_url'=> asset('storage/'.$data->image),
-                    'id'=> $data->id,
-                    'body'=> $data->content,
-                    'sound'=> 'default',
-                    'title'=> $data->title,
-                    'message'=> $data->content,
-                    'notificationType'=> 'custom',
+                    'body'              => $data->content,
+                    'title'             => $data->title,
+                    'click_action'      => $targeturl,
+                    'message'           => $data->content,
+                    'notificationType'  => $type,
+                    'productName'       => $product->name ?? '',
+                    'productId'         => $product->id ?? '',
+                    'banner_url'        => asset('storage/'.$data->image),
+                    'id'                => $data->id,
+                    'sound'             => 'default',
                 ];
             break;
 
@@ -90,29 +73,28 @@ class SendNotification
                 
                 $targeturl = route('shop.productOrCategory.index', $category->slug);
                 $fieldData = [
-                    'categoryName'  => $category->name ?? '',
-                    'categoryId'    => $category->id ?? '',
-                    'banner_url'    => asset('storage/'.$data->image),
-                    'id'            => $data->id,
-                    'body'          => $data->content,
-                    'sound'         => 'default',
-                    'title'         => $data->title,
-                    'message'       => $data->content,
-                    'notificationType' => $data->type,
+                    'categoryName'      => $category->name ?? '',
+                    'categoryId'        => $category->id ?? '',
+                    'banner_url'        => asset('storage/'.$data->image),
+                    'id'                => $data->id,
+                    'body'              => $data->content,
+                    'sound'             => 'default',
+                    'title'             => $data->title,
+                    'message'           => $data->content,
+                    'notificationType'  => $data->type,
                 ];
             break;
 
             case 'others':
                 $targeturl = route('shop.home.index');
                 $fieldData = [
-
-                    'banner_url'=> asset('storage/'.$data->image),
-                    'id'=> $data->id,
-                    'body'=> $data->content,
-                    'sound'=> 'default',
-                    'title'=> $data->title,
-                    'message'=> $data->content,
-                    'notificationType'=> $data->type
+                    'banner_url'        => asset('storage/'.$data->image),
+                    'id'                => $data->id,
+                    'body'              => $data->content,
+                    'sound'             => 'default',
+                    'title'             => $data->title,
+                    'message'           => $data->content,
+                    'notificationType'  => $data->type
                 ];
             break;
         }

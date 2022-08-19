@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('push_notification', function (Blueprint $table) {
+        Schema::create('push_notifications', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->string('image')->nullable();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('push_notification');
+        Schema::dropIfExists('push_notifications');
     }
 };

@@ -221,7 +221,7 @@ class PushNotificationDataGrid extends DataGrid
         $this->addColumn([
             'index'         => 'status',
             'label'         => trans('api::app.notification.notification-status'),
-            'type'          => 'number',
+            'type'          => 'boolean',
             'searchable'    => true,
             'sortable'      => true,
             'filterable'    => true,

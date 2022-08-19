@@ -197,18 +197,24 @@ class PushNotificationDataGrid extends DataGrid
             'label'         =>  trans('api::app.notification.store-view'),
             'type'          => 'string',
             'searchable'    => false,
-            'sortable'      => true,
+            'sortable'      => false,
             'filterable'    => false,
             'closure'       => true,
             'wrapper'       => function($row) {
-                $notificationTranslations = app('Webkul\API\Repositories\PushNotificationTranslationRepository')->where(['push_notification_id' => $row->notification_id])->groupBy('push_notification_id', 'channel')->get();
+                $channelNames = '';
+                $notificationTranslations = app('Webkul\API\Repositories\NotificationTranslationRepository')->where(['push_notification_id' => $row->notification_id])->groupBy('push_notification_id', 'channel')->pluck('channel')->toArray();
 
-                foreach ($notificationTranslations as $imageChannel) {
-                    $channel = app('Webkul\Core\Repositories\ChannelRepository')->findOneByField('code', $imageChannel->channel);
-                    if ( $channel ) {
-                        echo $channel['name'] . '</br>' . PHP_EOL;
+                if ($notificationTranslations) {
+                    $channels = app('Webkul\Core\Repositories\ChannelRepository')->whereIn('code', $notificationTranslations)->get();
+                    
+                    foreach ($channels as $key => $channel) {
+                        if ( $channel ) {
+                            $channelNames .= $channel->name . '</br>' . PHP_EOL;
+                        }   
                     } 
                 }
+
+                return $channelNames;
             }
         ]);
 
@@ -255,7 +261,7 @@ class PushNotificationDataGrid extends DataGrid
     public function prepareActions()
     {
         $this->addAction([
-            'title'     => trans('api::app.datagrid.edit'),
+            'title'     => trans('admin::app.datagrid.edit'),
             'method'    => 'GET', //use post only for redirects only
             'route'     => 'api.notification.edit',
             'icon'      => 'icon pencil-lg-icon',
@@ -265,7 +271,7 @@ class PushNotificationDataGrid extends DataGrid
         ]);
 
         $this->addAction([
-            'title'     => trans('api::app.datagrid.delete'),
+            'title'     => trans('admin::app.datagrid.delete'),
             'method'    => 'POST', // use GET request only for redirect purposes
             'route'     => 'api.notification.delete',
             'icon'      => 'icon trash-icon',
@@ -281,19 +287,19 @@ class PushNotificationDataGrid extends DataGrid
     {
         $this->addMassAction([
             'type'      => 'delete',
-            'title'     => trans('api::app.category.delete'),
+            'label'     => trans('admin::app.datagrid.delete'),
             'action'    => route('api.notification.mass-delete'),
             'method'    => 'POST',
         ]);
 
         $this->addMassAction([
             'type'      => 'update',
-            'title'     => trans('api::app.category.update-status'),
+            'label'     => trans('admin::app.datagrid.update-status'),
             'action'    => route('api.notification.mass-update'),
             'method'    => 'POST',
             'options'   => [
-                trans('api::app.category.enabled')   => 1,
-                trans('api::app.category.disabled')  => 0
+                trans('admin::app.datagrid.active')     => 1,
+                trans('admin::app.datagrid.inactive')   => 0
             ]
         ]);
     }

@@ -59,4 +59,13 @@ return [
             'category'          => 'Category Based',
         ],
     ],
+
+    'alert' => [
+        'create-success'        => ':name created successfully',
+        'update-success'        => ':name updated successfully',
+        'delete-success'        => ':name deleted successfully',
+        'delete-failed'         => ':name deleted failed',
+        'sended-successfully'   => ':name pushed successfully for android and iOS.',
+        'no-value-selected'     => 'there are no existing value',
+    ],
 ];

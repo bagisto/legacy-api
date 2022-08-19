@@ -3,6 +3,7 @@
 namespace Webkul\API\Http\Controllers\Admin;
 
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\API\DataGrids\PushNotificationDataGrid;
 use Webkul\API\Repositories\NotificationRepository;
 use Webkul\API\Helpers\SendNotification;
 use Webkul\Category\Repositories\CategoryRepository;
@@ -91,6 +92,10 @@ class NotificationController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return app(PushNotificationDataGrid::class)->toJson();
+        }
+
         return view($this->_config['view']);
     }
 
@@ -124,17 +129,17 @@ class NotificationController extends Controller
         
         $data = collect(request()->all())->except('_token')->toArray();
 
-        if ( $data['type'] == 'custom_collection' && isset($data['custom_collection']) ) {
-            $data['product_category_id'] = $data['custom_collection'];
+        // if ( $data['type'] == 'custom_collection' && isset($data['custom_collection']) ) {
+        //     $data['product_category_id'] = $data['custom_collection'];
 
-            unset($data['custom_collection']);
-        }
+        //     unset($data['custom_collection']);
+        // }
 
-        $this->notificationsRepository->create($data);
+        $this->notificationRepository->create($data);
 
-        session()->flash('success', trans('mobikul::app.mobikul.alert.create-success', ['name' => 'Notification']));
+        session()->flash('success', trans('api::app.alert.create-success', ['name' => 'Notification']));
 
-        return redirect()->route('mobikul.notification.index');
+        return redirect()->route('api.notification.index');
     }
 
     /**
@@ -145,16 +150,11 @@ class NotificationController extends Controller
      */
     public function edit($id)
     {
-        $notification = $this->notificationsRepository->findOrFail($id);
-
-        $customCollection = [];
-        if ( $notification->type == 'custom_collection' ) {
-            $customCollection = app('Webkul\Mobikul\Repositories\CustomCollectionRepository')->findOrFail($notification->product_category_id);
-        }
+        $notification = $this->notificationRepository->findOrFail($id);
 
         $channels = $this->channelRepository->get();
 
-        return view($this->_config['view'], compact('notification', 'customCollection','channels'));
+        return view($this->_config['view'], compact('notification', 'channels'));
     }
 
     /**
@@ -176,17 +176,11 @@ class NotificationController extends Controller
 
         $data = collect(request()->all())->except('_token')->toArray();
 
-        if ( $data['type'] == 'custom_collection' && isset($data['custom_collection']) ) {
-            $data['product_category_id'] = $data['custom_collection'];
+        $this->notificationRepository->update($data, $id);
 
-            unset($data['custom_collection']);
-        }
+        session()->flash('success', trans('api::app.alert.update-success', ['name' => 'Notification']));
 
-        $this->notificationsRepository->update($data, $id);
-
-        session()->flash('success', trans('mobikul::app.mobikul.alert.update-success', ['name' => 'Notification']));
-
-        return redirect()->route('mobikul.notification.index');
+        return redirect()->route('api.notification.index');
     }
 
     /**
@@ -198,13 +192,13 @@ class NotificationController extends Controller
     public function delete($id)
     {
         try {
-            $this->notificationsRepository->delete($id);
+            $this->notificationRepository->delete($id);
 
-            session()->flash('success', trans('mobikul::app.mobikul.alert.delete-success', ['name' => 'Notification']));
+            session()->flash('success', trans('api::app.alert.delete-success', ['name' => 'Notification']));
 
             return response()->json(['message' => true], 200);
         } catch(\Exception $e) {
-            session()->flash('success', trans('mobikul::app.mobikul.alert.delete-failed', ['name' => 'Notification']));
+            session()->flash('success', trans('api::app.alert.delete-failed', ['name' => 'Notification']));
         }
 
         return response()->json(['message' => false], 400);
@@ -221,14 +215,14 @@ class NotificationController extends Controller
         $updateOption = request()->input('update-options');
 
         foreach ($notificationIds as $notificationId) {
-            $notification = $this->notificationsRepository->find($notificationId);
+            $notification = $this->notificationRepository->find($notificationId);
 
             $notification->update([
                 'status' => $updateOption
             ]);
         }
 
-        session()->flash('success', trans('mobikul::app.mobikul.alert.update-success', ['name' => 'Notification']));
+        session()->flash('success', trans('api::app.alert.update-success', ['name' => 'Notification']));
 
         return redirect()->back();
     }
@@ -243,12 +237,12 @@ class NotificationController extends Controller
         $notificationIds = explode(',', request()->input('indexes'));
 
         foreach ($notificationIds as $notificationId) {
-            $this->notificationsRepository->deleteWhere([
+            $this->notificationRepository->deleteWhere([
                 'id' => $notificationId
             ]);
         }
 
-        session()->flash('success', trans('mobikul::app.mobikul.alert.delete-success', ['name' => 'Notification']));
+        session()->flash('success', trans('api::app.alert.delete-success', ['name' => 'Notification']));
 
         return redirect()->back();
     }
@@ -260,12 +254,14 @@ class NotificationController extends Controller
      */
     public function sendNotification($id)
     {
-        $data = $this->notificationsRepository->find($id);
+        $data = $this->notificationRepository->find($id);
 
         $notification = $this->sendNotification->sendGCM($data);
 
         if (isset($notification->message_id)) {
-            session()->flash('success', trans('mobikul::app.mobikul.alert.sended-successfully', ['name' => 'Notification']));
+            session()->flash('success', trans('api::app.alert.sended-successfully', ['name' => 'Notification']));
+        } elseif (isset($notification->error)) {
+            session()->flash('error', $notification->error);
         }
 
         return redirect()->back();

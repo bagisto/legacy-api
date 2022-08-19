@@ -13,6 +13,21 @@ class PushNotification extends Model implements PushNotificationContract
 
     protected $guarded = ['_token'];
 
+    /**
+     * Translated attributes.
+     *
+     * @var array
+     */
+    public $translatedAttributes = [
+        'title',
+        'content',
+    ];
+
+    /**
+     * Fillables.
+     *
+     * @var array
+     */
     protected $fillable = [
         'type',
         'product_category_id',
@@ -20,12 +35,19 @@ class PushNotification extends Model implements PushNotificationContract
     ];
 
     /**
+     * Eager loading.
+     *
+     * @var array
+     */
+    protected $with = ['translations'];
+
+    /**
      * Get the Notification translation and channels entries that are associated with Notification.
      * May be one for each locale and each channel.
      */
     public function translations()
     {
-        return $this->hasMany(PushNotificationTranslationProxy::modelClass(),'mobikul_notification_id');
+        return $this->hasMany(PushNotificationTranslationProxy::modelClass(),'push_notification_id');
     }
     
     /**

@@ -96,7 +96,7 @@ class ValidateAPIHeader
      */
     public function validateConfigHeader()
     {
-        $api_token = request()->header('api_token');
+        $api_token = request()->header('api-token');
         $config_username = core()->getConfigData('general.api.settings.username');
         $config_password = core()->getConfigData('general.api.settings.password');
 

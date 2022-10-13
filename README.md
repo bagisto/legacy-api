@@ -15,6 +15,8 @@ This package is for the user who still wants to use the older version.
 
 - Add JWT Time To Live in `.env` file: `JWT_TTL=525600`
 
+- Add JWT_SHOW_BLACKLIST_EXCEPTION in `.env` file: `JWT_SHOW_BLACKLIST_EXCEPTION=true`
+
 ## Contributors ✨
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->

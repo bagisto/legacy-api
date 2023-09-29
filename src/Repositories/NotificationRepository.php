@@ -9,6 +9,7 @@ use Illuminate\Container\Container as App;
 
 class NotificationRepository extends Repository
 {
+    protected $notificationTranslationRepository;
     /**
      * Create a new repository instance.
      *

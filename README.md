@@ -7,6 +7,10 @@ This package is for the user who still wants to use the older version.
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
+### 2. Requirements:
+
+* **Bagisto**: v1.5.1
+
 ## Installation
 
 - Run `composer require bagisto/legacy-api`.

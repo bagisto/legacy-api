@@ -22,18 +22,11 @@ class AddressController extends Controller
     protected $_config;
 
     /**
-     * CustomerAddressRepository object
-     *
-     * @var \Webkul\Customer\Repositories\CustomerAddressRepository
-     */
-    protected $customerAddressRepository;
-
-    /**
      * Controller instance
      *
      * @param CustomerAddressRepository $customerAddressRepository
      */
-    public function __construct(CustomerAddressRepository $customerAddressRepository)
+    public function __construct(protected CustomerAddressRepository $customerAddressRepository)
     {
         $this->guard = request()->has('token') ? 'api' : 'customer';
 
@@ -44,8 +37,6 @@ class AddressController extends Controller
         $this->middleware('validateAPIHeader');
 
         $this->_config = request('_config');
-
-        $this->customerAddressRepository = $customerAddressRepository;
     }
 
     /**

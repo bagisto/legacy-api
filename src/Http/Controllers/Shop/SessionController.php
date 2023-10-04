@@ -41,8 +41,6 @@ class SessionController extends Controller
         $this->middleware('validateAPIHeader');
 
         $this->_config = request('_config');
-
-        $this->customerRepository = $customerRepository;
     }
 
     /**

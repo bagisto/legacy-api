@@ -9,7 +9,6 @@ use Illuminate\Container\Container as App;
 
 class NotificationRepository extends Repository
 {
-    protected $notificationTranslationRepository;
     /**
      * Create a new repository instance.
      *
@@ -19,11 +18,9 @@ class NotificationRepository extends Repository
      * @return void
      */
     public function __construct(
-        NotificationTranslationRepository $notificationTranslationRepository,
+        protected NotificationTranslationRepository $notificationTranslationRepository,
         App $app
     ) {
-        $this->notificationTranslationRepository = $notificationTranslationRepository;
-
         parent::__construct($app);
     }
 

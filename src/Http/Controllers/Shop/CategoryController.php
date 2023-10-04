@@ -9,23 +9,14 @@ use Webkul\API\Http\Resources\Catalog\Category as CategoryResource;
 class CategoryController extends Controller
 {
     /**
-     * CategoryRepository object
-     *
-     * @var \Webkul\Category\Repositories\CategoryRepository
-     */
-    protected $categoryRepository;
-
-    /**
      * Create a new controller instance.
      *
      * @param  Webkul\Category\Repositories\CategoryRepository  $categoryRepository
      * @return void
      */
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(protected CategoryRepository $categoryRepository)
     {
         $this->middleware('validateAPIHeader');
-
-        $this->categoryRepository = $categoryRepository;
     }
 
     /**

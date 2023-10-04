@@ -27,20 +27,6 @@ class CustomerController extends Controller
     protected $_config;
 
     /**
-     * Repository object
-     *
-     * @var \Webkul\Customer\Repositories\CustomerRepository
-     */
-    protected $customerRepository;
-
-    /**
-     * Repository object
-     *
-     * @var \Webkul\Customer\Repositories\CustomerGroupRepository
-     */
-    protected $customerGroupRepository;
-
-    /**
      * Create a new controller instance.
      *
      * @param  \Webkul\Customer\Repositories\CustomerRepository  $customerRepository
@@ -48,8 +34,8 @@ class CustomerController extends Controller
      * @return void
      */
     public function __construct(
-        CustomerRepository $customerRepository,
-        CustomerGroupRepository $customerGroupRepository
+        protected CustomerRepository $customerRepository,
+        protected CustomerGroupRepository $customerGroupRepository
     )   {
         $this->guard = request()->has('token') ? 'api' : 'customer';
 
@@ -63,10 +49,6 @@ class CustomerController extends Controller
         }
         
         $this->middleware('validateAPIHeader');
-
-        $this->customerRepository = $customerRepository;
-
-        $this->customerGroupRepository = $customerGroupRepository;
     }
 
     /**

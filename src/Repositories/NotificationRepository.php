@@ -18,11 +18,9 @@ class NotificationRepository extends Repository
      * @return void
      */
     public function __construct(
-        NotificationTranslationRepository $notificationTranslationRepository,
+        protected NotificationTranslationRepository $notificationTranslationRepository,
         App $app
     ) {
-        $this->notificationTranslationRepository = $notificationTranslationRepository;
-
         parent::__construct($app);
     }
 

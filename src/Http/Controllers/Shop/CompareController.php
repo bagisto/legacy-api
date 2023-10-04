@@ -9,35 +9,14 @@ use Webkul\Core\Repositories\ChannelRepository;
 class CompareController extends Controller
 {
     /**
-     * CompareRepository object
-     *
-     * @var \Webkul\Velocity\Repositories\VelocityCustomerCompareProductRepository
-     */
-    protected $compareRepository;
-
-    /**
-     * ProductFlatRepository object
-     *
-     * @var \Webkul\Product\Repositories\ProductFlatRepository
-     */
-    protected $productFlatRepository;
-
-    /**
-     * ChannelRepository object
-     *
-     * @var \Webkul\Core\Repositories\ChannelRepository
-     */
-    protected $channelRepository;
-
-    /**
      * @param  \Webkul\Velocity\Repositories\VelocityCustomerCompareProductRepository  $compareRepository
      * @param  \Webkul\Product\Repositories\ProductFlatRepository   $productFlatRepository
      * @param  \Webkul\Core\Repositories\ChannelRepository   $channelRepository
      */
     public function __construct(
-        CompareRepository $compareRepository,
-        ProductFlatRepository $productFlatRepository,
-        ChannelRepository $channelRepository
+        protected CompareRepository $compareRepository,
+        protected ProductFlatRepository $productFlatRepository,
+        protected ChannelRepository $channelRepository
     )
     {
         $this->guard = request()->has('token') ? 'api' : 'customer';
@@ -50,12 +29,6 @@ class CompareController extends Controller
         }
         
         $this->middleware('validateAPIHeader');
-
-        $this->compareRepository = $compareRepository;
-
-        $this->productFlatRepository = $productFlatRepository;
-
-        $this->channelRepository = $channelRepository;
     }
 
     /**

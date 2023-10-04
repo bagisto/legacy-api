@@ -29,7 +29,8 @@ class SessionController extends Controller
      *
      * @param  \Webkul\Customer\Repositories\CustomerRepository  $customerRepository
      */
-    public function __construct(CustomerRepository $customerRepository)
+    public function __construct(
+        protected CustomerRepository $customerRepository)
     {
         $this->guard = request()->has('token') ? 'api' : 'customer';
 
@@ -40,8 +41,6 @@ class SessionController extends Controller
         $this->middleware('validateAPIHeader');
 
         $this->_config = request('_config');
-
-        $this->customerRepository = $customerRepository;
     }
 
     /**

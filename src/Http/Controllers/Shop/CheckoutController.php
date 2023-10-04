@@ -26,20 +26,6 @@ class CheckoutController extends Controller
     protected $guard;
 
     /**
-     * CartRepository object
-     *
-     * @var \Webkul\Checkout\Repositories\CartRepository
-     */
-    protected $cartRepository;
-
-    /**
-     * CartItemRepository object
-     *
-     * @var \Webkul\Checkout\Repositories\CartItemRepository
-     */
-    protected $cartItemRepository;
-
-    /**
      * Controller instance
      *
      * @param  \Webkul\Checkout\Repositories\CartRepository  $cartRepository
@@ -47,9 +33,9 @@ class CheckoutController extends Controller
      * @param  \Webkul\Sales\Repositories\OrderRepository  $orderRepository
      */
     public function __construct(
-        CartRepository $cartRepository,
-        CartItemRepository $cartItemRepository,
-        OrderRepository $orderRepository
+        protected CartRepository $cartRepository,
+        protected CartItemRepository $cartItemRepository,
+        protected OrderRepository $orderRepository
     )
     {
         $this->guard = request()->has('token') ? 'api' : 'customer';
@@ -61,12 +47,6 @@ class CheckoutController extends Controller
         $this->middleware('validateAPIHeader');
 
         $this->_config = request('_config');
-
-        $this->cartRepository = $cartRepository;
-
-        $this->cartItemRepository = $cartItemRepository;
-
-        $this->orderRepository = $orderRepository;
     }
 
     /**

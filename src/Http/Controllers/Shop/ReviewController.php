@@ -16,26 +16,17 @@ class ReviewController extends Controller
     protected $guard;
 
     /**
-     * ProductReviewRepository $reviewRepository
-     *
-     * @var \Webkul\Product\Repositories\ProductReviewRepository
-     */
-    protected $reviewRepository;
-
-    /**
      * Controller instance.
      *
      * @param  Webkul\Product\Repositories\ProductReviewRepository  $reviewRepository
      */
-    public function __construct(ProductReviewRepository $reviewRepository)
+    public function __construct(protected ProductReviewRepository $reviewRepository)
     {
         $this->guard = request()->has('token') ? 'api' : 'customer';
 
         auth()->setDefaultDriver($this->guard);
         
         $this->middleware('validateAPIHeader');
-
-        $this->reviewRepository = $reviewRepository;
     }
 
     /**

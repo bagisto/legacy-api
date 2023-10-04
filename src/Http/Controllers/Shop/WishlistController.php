@@ -12,26 +12,12 @@ use Cart;
 class WishlistController extends Controller
 {
     /**
-     * WishlistRepository object
-     *
-     * @var \Webkul\Customer\Repositories\WishlistRepository
-     */
-    protected $wishlistRepository;
-
-    /**
-     * ProductRepository object
-     *
-     * @var \Webkul\Customer\Repositories\ProductRepository
-     */
-    protected $productRepository;
-
-    /**
      * @param  \Webkul\Customer\Repositories\WishlistRepository  $wishlistRepository
      * @param  \Webkul\Product\Repositories\ProductRepository  $productRepository
      */
     public function __construct(
-        WishlistRepository $wishlistRepository,
-        ProductRepository $productRepository
+        protected WishlistRepository $wishlistRepository,
+        protected ProductRepository $productRepository
     )
     {
         $this->guard = request()->has('token') ? 'api' : 'customer';
@@ -41,10 +27,6 @@ class WishlistController extends Controller
         $this->middleware('auth:' . $this->guard);
         
         $this->middleware('validateAPIHeader');
-
-        $this->wishlistRepository = $wishlistRepository;
-
-        $this->productRepository = $productRepository;
     }
 
     /**

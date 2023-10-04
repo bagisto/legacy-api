@@ -20,41 +20,6 @@ class NotificationController extends Controller
     protected $_config;
 
     /**
-     * Notification repository instance.
-     *
-     * @var \Webkul\API\Repositories\NotificationRepository
-     */
-    protected $notificationRepository;
-
-    /**
-     * SendNotification helper instance.
-     *
-     * @var \Webkul\API\Helpers\SendNotification
-     */
-    protected $sendNotification;
-
-    /**
-     * Channel repository instance.
-     *
-     * @var \Webkul\Core\Repositories\ChannelRepository
-     */
-    protected $channelRepository;
-
-    /**
-     * Product repository instance.
-     *
-     * @var \Webkul\Product\Repositories\ProductRepository
-     */
-    protected $productRepository;
-
-    /**
-     * Category repository instance.
-     *
-     * @var \Webkul\Category\Repositories\CategoryRepository
-     */
-    protected $categoryRepository;
-
-    /**
      * Create a new controller instance.
      *
      * @param \Webkul\API\Repositories\NotificationRepository  $notificationRepository
@@ -64,25 +29,15 @@ class NotificationController extends Controller
      * @param \Webkul\Category\Repositories\CategoryRepository  $categoryRepository
      */
     public function __construct(
-        ChannelRepository $channelRepository,
-        NotificationRepository $notificationRepository,
-        SendNotification $sendNotification,
-        CategoryRepository $categoryRepository,
-        ProductRepository $productRepository
+        protected ChannelRepository $channelRepository,
+        protected NotificationRepository $notificationRepository,
+        protected SendNotification $sendNotification,
+        protected CategoryRepository $categoryRepository,
+        protected ProductRepository $productRepository
     )   {
         $this->_config = request('_config');
 
         $this->middleware('admin');
-
-        $this->notificationRepository = $notificationRepository;
-
-        $this->sendNotification = $sendNotification;
-
-        $this->channelRepository = $channelRepository;
-
-        $this->productRepository = $productRepository;
-
-        $this->categoryRepository = $categoryRepository;
     }
 
     /**

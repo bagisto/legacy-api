@@ -6,7 +6,7 @@ use Webkul\API\Http\Controllers\Admin\NotificationController;
 /**
  * FCM Notification routes.
  */
-Route::group(['middleware' => ['web', 'admin', 'admin_locale'], 'prefix' => config('app.admin_url')], function () {
+Route::group(['middleware' => ['web', 'admin', 'locale'], 'prefix' => config('app.admin_url')], function () {
     Route::prefix('api_notification')->group(function () {
         Route::get('/', [NotificationController::class, 'index'])->defaults('_config', [
             'view' => 'api::notification.index'

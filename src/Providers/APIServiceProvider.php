@@ -5,6 +5,8 @@ namespace Webkul\API\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
 use Webkul\API\Http\Middleware\ValidateAPIHeader;
+use Webkul\API\Models\Customer;
+use Webkul\Customer\Models\Customer as BaseCustomer;
 
 class APIServiceProvider extends ServiceProvider
 {
@@ -24,6 +26,8 @@ class APIServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'api');
         
         $router->aliasMiddleware('validateAPIHeader', ValidateAPIHeader::class);
+
+        $this->app->concord->registerModel(BaseCustomer::class, Customer::class);
     }
 
     /**

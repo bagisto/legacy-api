@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('content')->nullable();
             $table->string('locale');
             $table->string('channel');
-            $table->bigInteger('push_notification_id')->unsigned();
+            $table->integer('push_notification_id')->unsigned();
 
             $table->unique(['push_notification_id', 'locale', 'channel'], 'push_notification_translations_locale_unique');
 

@@ -4,10 +4,10 @@ namespace Webkul\API\Http\Controllers\Admin;
 
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\API\DataGrids\PushNotificationDataGrid;
-use Webkul\API\Repositories\NotificationRepository;
 use Webkul\API\Helpers\SendNotification;
 use Webkul\Category\Repositories\CategoryRepository;
 use Webkul\Core\Repositories\ChannelRepository;
+use Webkul\Notification\Repositories\NotificationRepository;
 use Webkul\Product\Repositories\ProductRepository;
 
 class NotificationController extends Controller

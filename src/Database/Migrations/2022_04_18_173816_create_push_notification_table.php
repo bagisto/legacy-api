@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('push_notification', function (Blueprint $table) {
+        Schema::create('api_notifications', function (Blueprint $table) {
             $table->integer('id');
             $table->string('type');
             $table->string('image')->nullable();
             $table->string('product_category_id')->nullable();
             $table->boolean('status')->default(0);
+            $table->timestamps();
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('push_notifications');
+        Schema::dropIfExists('api_notifications');
     }
 };

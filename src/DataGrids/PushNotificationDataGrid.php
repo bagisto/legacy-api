@@ -98,7 +98,7 @@ class PushNotificationDataGrid extends DataGrid
         }
 
         $queryBuilder = DB::table('push_notification_translations as pn_trans')
-                            ->leftJoin('push_notification as pn', 'pn_trans.push_notification_id', '=', 'pn.id')
+                            ->leftJoin('api_notifications as pn', 'pn_trans.push_notification_id', '=', 'pn.id')
                             ->leftJoin('channels as ch', 'pn_trans.channel', '=', 'ch.code')
                             ->leftJoin('channel_translations as ch_t', 'ch.id', '=', 'ch_t.channel_id')
                             ->addSelect(

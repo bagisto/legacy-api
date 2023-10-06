@@ -28,7 +28,7 @@ class APIServiceProvider extends ServiceProvider
         $router->aliasMiddleware('validateAPIHeader', ValidateAPIHeader::class);
 
         $this->app->concord->registerModel(BaseCustomer::class, Customer::class);
-        
+
         $this->app->register(ModuleServiceProvider::class);
     }
 

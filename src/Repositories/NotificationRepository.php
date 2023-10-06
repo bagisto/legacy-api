@@ -45,7 +45,6 @@ class NotificationRepository extends Repository
         Event::dispatch('api.notification.create.before');
 
         $notification = $this->model->create($data);
-
         if (isset($data['channels'])) {
             $model = app()->make($this->model());
 
@@ -53,6 +52,7 @@ class NotificationRepository extends Repository
                 if (in_array($channel->code, $data['channels'])) {
                     foreach ($channel->locales as $locale) {
                         $param = [];
+
                         foreach ($model->translatedAttributes as $attribute) {
                             if (isset($data[$attribute])) {
                                 $param[$attribute] = $data[$attribute];
@@ -61,13 +61,15 @@ class NotificationRepository extends Repository
                         $param['channel'] = $channel->code;
                         $param['locale'] = $locale->code;
                         $param['push_notification_id'] = $notification->id;
+                        $param['title'] = $data['title'];
+                        $param['content'] = $data['content'];
 
                         $this->notificationTranslationRepository->create($param);
                     }
                 }
             }
         }
-        
+
         $this->uploadImages($data, $notification);
 
         Event::dispatch('api.notification.create.after', $notification);

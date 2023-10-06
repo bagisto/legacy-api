@@ -83,7 +83,7 @@ class NotificationController extends Controller
         ]);
         
         $data = collect(request()->all())->except('_token')->toArray();
-
+     
         $this->notificationRepository->create($data);
 
         session()->flash('success', trans('api::app.alert.create-success', ['name' => 'Notification']));

@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->unique(['push_notification_id', 'locale', 'channel'], 'push_notification_translations_locale_unique');
 
-            $table->foreign('push_notification_id')->references('id')->on('push_notifications')->onDelete('cascade');
+            $table->foreign('push_notification_id')->references('id')->on('api_notifications')->onDelete('cascade');
         });
     }
 

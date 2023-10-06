@@ -7,7 +7,7 @@ use Laravel\Sanctum\HasApiTokens;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Webkul\Customer\Models\Customer as BaseCustomer;
 
-class Customer extends BaseCustomer implements  JWTSubject
+class Customer extends BaseCustomer implements JWTSubject
 {
     use HasApiTokens,HasFactory;
 

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('api_notifications', function (Blueprint $table) {
-            $table->integer('id');
+            $table->increments('id');
             $table->string('type');
             $table->string('image')->nullable();
             $table->string('product_category_id')->nullable();

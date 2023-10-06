@@ -13,6 +13,8 @@ use Webkul\API\Contracts\PushNotificationTranslation as PushNotificationTranslat
  */
 class PushNotificationTranslation extends Model implements PushNotificationTranslationContract
 {
+    protected $table = 'push_notification_translations';
+
     public $timestamps = false;
     
     protected $guarded = [

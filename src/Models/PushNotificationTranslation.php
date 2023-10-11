@@ -23,6 +23,20 @@ class PushNotificationTranslation extends Model implements PushNotificationTrans
         'updated_at',
     ];
 
+     /**
+     * Fillables.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'content',
+        'locale',
+        'channel',
+        'push_notification_id'
+    ];
+
+
     /**
      * Get the notification that owns the attribute value.
      */

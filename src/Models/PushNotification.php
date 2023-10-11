@@ -14,7 +14,7 @@ class PushNotification extends Model implements PushNotificationContract
     public $timestamps = true;
 
     protected $guarded = ['_token'];
-
+   
     /**
      * Translated attributes.
      *

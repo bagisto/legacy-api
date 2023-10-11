@@ -61,10 +61,11 @@ class ResourceController extends Controller
     public function index()
     {
         $query = $this->repository->scopeQuery(function($query) {
-            if (isset($this->_config['authorization_required']) && $this->_config['authorization_required']) {
-                $query = $query->where('customer_id', auth()->user()->id );
-            }
 
+            if (isset($this->_config['authorization_required']) && $this->_config['authorization_required']) {
+                $query = $query->where('customer_id', auth()->guard()->user()->id );
+            }
+            
             foreach (request()->except(['page', 'limit', 'pagination', 'sort', 'order', 'token']) as $input => $value) {
                 $query = $query->whereIn($input, array_map('trim', explode(',', $value)));
             }

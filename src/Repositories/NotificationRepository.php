@@ -42,8 +42,6 @@ class NotificationRepository extends Repository
      */
     public function create(array $data)
     {
-        Event::dispatch('api.notification.create.before');
-
         $notification = $this->model->create($data);
         if (isset($data['channels'])) {
             $model = app()->make($this->model());
@@ -72,7 +70,7 @@ class NotificationRepository extends Repository
 
         $this->uploadImages($data, $notification);
 
-        Event::dispatch('api.notification.create.after', $notification);
+        //Event::dispatch('api.notification.create.after', $notification);
 
         return $notification;
     }

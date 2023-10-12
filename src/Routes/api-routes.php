@@ -219,7 +219,9 @@ Route::group(['prefix' => 'api'], function ($router) {
 
         Route::get('customer/logout', [SessionController::class, 'destroy']);
 
-        Route::get('customer/get', [SessionController::class, 'get']);
+        Route::get('customer/get', [SessionController::class, 'get'])->defaults('_config', [
+            'authorization_required' => true
+        ]);
 
         Route::put('customer/profile', [SessionController::class, 'update']);
 

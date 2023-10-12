@@ -96,23 +96,22 @@ class PushNotificationDataGrid extends DataGrid
         } else {
             $whereInLocales = [$this->locale];
         }
-
         $queryBuilder = DB::table('push_notification_translations as pn_trans')
-                            ->leftJoin('push_notifications as pn', 'pn_trans.push_notification_id', '=', 'pn.id')
+                            ->leftJoin('api_notifications as pn', 'pn_trans.push_notification_id', '=', 'pn.id')
                             ->leftJoin('channels as ch', 'pn_trans.channel', '=', 'ch.code')
                             ->leftJoin('channel_translations as ch_t', 'ch.id', '=', 'ch_t.channel_id')
                             ->addSelect(
                                 'pn_trans.push_notification_id as notification_id',
-                                'pn.image',
-                                'pn_trans.title',
-                                'pn_trans.content',
-                                'pn_trans.channel',
-                                'pn_trans.locale',
-                                'pn.type',
-                                'pn.product_category_id',
-                                'pn.status',
-                                'pn.created_at',
-                                'pn.updated_at',
+                                'pn.image as image',
+                                'pn_trans.title as title',
+                                'pn_trans.content as content',
+                                'pn_trans.channel as channel',
+                                'pn_trans.locale as locale',
+                                'pn.type as type',
+                                'pn.product_category_id as ',
+                                'pn.status as status',
+                                'pn.created_at as created_at',
+                                'pn.updated_at as updated_at',
                                 'ch_t.name as channel_name'
                             );
         

@@ -9,10 +9,12 @@ use Webkul\API\Contracts\PushNotification as PushNotificationContract;
 
 class PushNotification extends Model implements PushNotificationContract
 {
+    protected $table = 'api_notifications';
+
     public $timestamps = true;
 
     protected $guarded = ['_token'];
-
+   
     /**
      * Translated attributes.
      *
@@ -21,6 +23,7 @@ class PushNotification extends Model implements PushNotificationContract
     public $translatedAttributes = [
         'title',
         'content',
+        'type',
     ];
 
     /**

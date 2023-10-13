@@ -18,27 +18,30 @@ This package is for the user who still wants to use the older version.
 - Run `php artisan jwt:secret`.
 
 -Goto app/Http.Kernel.php and add the below line to the $middleware array
+    ~~~      
        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-        \Illuminate\Session\Middleware\StartSession::class,
-       
+       \Illuminate\Session\Middleware\StartSession::class,
+    ~~~
+
 - Add JWT Time To Live in `.env` file: `JWT_TTL=525600`
 
 - Add JWT_SHOW_BLACKLIST_EXCEPTION in `.env` file: `JWT_SHOW_BLACKLIST_EXCEPTION=true`
 
-- Gotp config/auth.php and add the below line of code in guard array 
+- Goto config/auth.php and add the below line of code in guard array 
 
-        'api' => [
-            'driver'   => 'jwt',
-            'provider' => 'customer',
-        ],
-
+    ~~~
+       'api' => [
+              'driver'   => 'jwt',
+              'provider' => 'customer',
+              ],
+    ~~~    
    Add below line of code in provider array
-    
+    ~~~
         'customer' => [
             'driver' => 'eloquent',
             'model'  => Webkul\API\Models\Customer::class,
         ],
-
+    ~~~
 ## Contributors ✨
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->

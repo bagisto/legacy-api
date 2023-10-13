@@ -84,13 +84,12 @@ class PushNotificationDataGrid extends DataGrid
      * @return void
      */
     public function prepareQueryBuilder()
-    {
+    {    
         if ($this->channel === 'all') {
             $whereInChannels = Channel::query()->pluck('code')->toArray();
         } else {
             $whereInChannels = [$this->channel];
         }
-
         if ($this->locale === 'all') {
             $whereInLocales = Locale::query()->pluck('code')->toArray();
         } else {
@@ -119,7 +118,7 @@ class PushNotificationDataGrid extends DataGrid
 
             $queryBuilder->whereIn('pn_trans.locale', $whereInLocales);
             $queryBuilder->whereIn('pn_trans.channel', $whereInChannels);
-
+            
         $this->addFilter('notification_id', 'pn_trans.push_notification_id');
         $this->addFilter('title', 'pn_trans.title');
         $this->addFilter('content', 'pn_trans.content');
@@ -201,7 +200,7 @@ class PushNotificationDataGrid extends DataGrid
             'closure'       => true,
             'wrapper'       => function($row) {
                 $channelNames = '';
-                $notificationTranslations = app('Webkul\API\Repositories\NotificationTranslationRepository')->where(['push_notification_id' => $row->notification_id])->groupBy('push_notification_id', 'channel')->pluck('channel')->toArray();
+                $notificationTranslations = DB::table('push_notification_translations')->where(['push_notification_id' => $row->notification_id])->groupBy('push_notification_id', 'channel')->pluck('channel')->toArray();
 
                 if ($notificationTranslations) {
                     $channels = app('Webkul\Core\Repositories\ChannelRepository')->whereIn('code', $notificationTranslations)->get();

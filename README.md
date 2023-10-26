@@ -17,7 +17,8 @@ This package is for the user who still wants to use the older version.
 
 - Run `php artisan jwt:secret`.
 
--Goto app/Http.Kernel.php and add the below line to the $middleware array
+- Goto app/Http/Kernel.php and add find an array 'middlewareGroups' inside it there is a key named 'api' inside it do an entry:
+
  ~~~ 
  \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
  \Illuminate\Session\Middleware\StartSession::class,

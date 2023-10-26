@@ -143,9 +143,7 @@ class NotificationController extends Controller
         try {
             $this->notificationRepository->delete($id);
 
-            session()->flash('success', trans('api::app.alert.delete-success', ['name' => 'Notification']));
-
-            return response()->json(['message' => true], 200);
+            return response()->json(['message' => trans('api::app.alert.delete-success', ['name' => 'Notification'])], 200);
         } catch(\Exception $e) {
             session()->flash('success', trans('api::app.alert.delete-failed', ['name' => 'Notification']));
         }

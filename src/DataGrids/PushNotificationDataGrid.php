@@ -122,9 +122,10 @@ class PushNotificationDataGrid extends DataGrid
         $this->addFilter('notification_id', 'pn_trans.push_notification_id');
         $this->addFilter('title', 'pn_trans.title');
         $this->addFilter('content', 'pn_trans.content');
-        $this->addFilter('channel_name', 'ch_t.name');
-        $this->addFilter('status', 'pn.status');
         $this->addFilter('type', 'pn.type');
+        $this->addFilter('status', 'pn.status');
+        $this->addFilter('created_at', 'pn.created_at');
+        $this->addFilter('updated_at', 'pn.updated_at');
 
         $this->setQueryBuilder($queryBuilder);
     }
